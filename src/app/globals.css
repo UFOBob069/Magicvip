@@ -39,3 +39,132 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+/* ───────────────────────── premium motion / magic ───────────────────────── */
+
+@keyframes mvm-float {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.35; }
+  50%      { transform: translate3d(0, -24px, 0); opacity: 0.75; }
+}
+.mvm-float { animation: mvm-float 14s ease-in-out infinite; will-change: transform, opacity; }
+
+@keyframes mvm-drift {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(14px, -10px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+.mvm-drift { animation: mvm-drift 22s ease-in-out infinite; }
+
+@keyframes mvm-pulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.04); }
+}
+.mvm-pulse { animation: mvm-pulse 3.4s ease-in-out infinite; }
+
+@keyframes mvm-shimmer {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+.mvm-shimmer-target { position: relative; overflow: hidden; }
+.mvm-shimmer-target::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.mvm-shimmer-target:hover::after {
+  animation: mvm-shimmer 0.9s ease-out forwards;
+}
+
+/* Text gradient for accent words (soft white → warm gold). */
+.mvm-text-gold {
+  background: linear-gradient(135deg, #ffffff 0%, #fff1d6 40%, #e6c068 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  /* subtle glow */
+  text-shadow: 0 0 40px rgba(230, 192, 104, 0.15);
+}
+
+/* Glass surface — used for hero preview cards on the dark background. */
+.mvm-glass {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 20px 50px -20px rgba(0, 0, 0, 0.55);
+}
+
+/* Primary CTA: navy → indigo with soft blue glow + hover lift. */
+.mvm-cta {
+  background-image: linear-gradient(135deg, #1b2a4e 0%, #3a4fbf 60%, #5472ff 100%);
+  color: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 0 24px rgba(80, 120, 255, 0.25),
+    0 12px 30px -10px rgba(20, 30, 80, 0.6);
+  transition: transform 260ms ease, box-shadow 260ms ease, filter 260ms ease;
+}
+.mvm-cta:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+    0 0 42px rgba(120, 160, 255, 0.45),
+    0 18px 40px -12px rgba(20, 30, 80, 0.7);
+  filter: brightness(1.04);
+}
+
+/* Match score pill — soft emerald gradient with subtle glow. */
+.mvm-match-pill {
+  background-image: linear-gradient(135deg, #0f7a4c 0%, #22c58a 100%);
+  color: #f0fff8;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+    0 0 14px rgba(34, 197, 138, 0.35);
+}
+
+/* Card hover lift for premium match cards. */
+.mvm-card {
+  transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(250, 248, 243, 1) 100%);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px -16px rgba(15, 23, 42, 0.15);
+}
+.mvm-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(80, 120, 255, 0.25);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 20px 40px -18px rgba(15, 23, 42, 0.28),
+    0 0 0 1px rgba(80, 120, 255, 0.1),
+    0 0 24px rgba(120, 160, 255, 0.12);
+}
+
+/* Header: subtle border glow under the blur. */
+.mvm-header-glow {
+  box-shadow:
+    0 1px 0 rgba(15, 23, 42, 0.06),
+    0 8px 24px -16px rgba(80, 120, 255, 0.18);
+}
+
+/* Reduced-motion friends */
+@media (prefers-reduced-motion: reduce) {
+  .mvm-float, .mvm-drift, .mvm-pulse { animation: none !important; }
+  .mvm-cta { transition: none; }
+}
